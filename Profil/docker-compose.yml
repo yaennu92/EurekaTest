@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+  registry:
+    image: appoxgmbh/eureka-server    
+    ports:
+      - "8761:8761"
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+volumes:
+  postgres-data:

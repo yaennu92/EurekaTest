@@ -27,27 +27,27 @@ public class PersonController : ControllerBase
         _httpClient = new HttpClient(_handler, false);
     }
 
-    [HttpPost(Name = "AddPerson")]
+    [Route("[action]")]
     public async Task<ActionResult<Person>> CreatePerson(Person person)
     {
         try
         {
             if (person == null)
                 return BadRequest();
-            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            await using (var dbContextTransaction = await _context.Database.BeginTransactionAsync())
             {
                 var createdPerson = _personRepository.AddPerson(person);
-                var  result =await _httpClient.PostAsJsonAsync("http://AddressExample/WeatherForecast/AddAddress", new
-                {
-                    id = createdPerson.Id,
-                    street = "string",
-                    zip = "string",
-                    city = "string"
-                });
-                if (result.StatusCode != HttpStatusCode.OK)
-                    throw new Exception("blubb");
+                // var  result =await _httpClient.PostAsJsonAsync("http://AddressExample/WeatherForecast/AddAddress", new
+                // {
+                //     id = createdPerson.Id,
+                //     street = "string",
+                //     zip = "string",
+                //     city = "string"
+                // });
+                // if (result.StatusCode != HttpStatusCode.OK)
+                //     throw new Exception("blubb");
                 
-                dbContextTransaction.Commit();
+                await dbContextTransaction.CommitAsync();
             }
 
             return Ok();

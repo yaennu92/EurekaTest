@@ -11,12 +11,12 @@ public class PersonRepository
         _context = context;
     }
     
-    public async Task<Person> AddPerson(Person person)
+    public Person AddPerson(Person person)
     {
         try
         {
             _context.Add(person);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return person;
         }
         catch (Exception ex)

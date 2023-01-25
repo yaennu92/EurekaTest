@@ -17,7 +17,15 @@ public class ValuesController : ControllerBase {
     // GET api/values
     [HttpGet]
     public async Task<string> Get() {
-        var client = new HttpClient(_handler, false);
-        return await client.GetStringAsync("http://EurekaRegisterExample/api/values");
+        try
+        {
+            var client = new HttpClient(_handler, false);
+            return await client.GetStringAsync("http://AddressExample/WeatherForecast/GetAddresses");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 }

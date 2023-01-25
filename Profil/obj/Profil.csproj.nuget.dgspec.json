@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\yg\\RiderProjects\\Profil\\Profil\\Profil.csproj": {}
+    "C:\\Workspace\\private\\Profil\\Profil\\Profil.csproj": {}
   },
   "projects": {
-    "C:\\Users\\yg\\RiderProjects\\Profil\\Profil\\Profil.csproj": {
+    "C:\\Workspace\\private\\Profil\\Profil\\Profil.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\yg\\RiderProjects\\Profil\\Profil\\Profil.csproj",
+        "projectUniqueName": "C:\\Workspace\\private\\Profil\\Profil\\Profil.csproj",
         "projectName": "Profil",
-        "projectPath": "C:\\Users\\yg\\RiderProjects\\Profil\\Profil\\Profil.csproj",
+        "projectPath": "C:\\Workspace\\private\\Profil\\Profil\\Profil.csproj",
         "packagesPath": "C:\\Users\\yg\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\yg\\RiderProjects\\Profil\\Profil\\obj\\",
+        "outputPath": "C:\\Workspace\\private\\Profil\\Profil\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -41,14 +41,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
-            "EntityFramework6.Npgsql": {
-              "target": "Package",
-              "version": "[6.4.3, )"
-            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.2, )"
@@ -61,7 +53,7 @@
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[7.0.0-rc.1, )"
+              "version": "[7.0.1, )"
             },
             "Steeltoe.Discovery.Eureka": {
               "target": "Package",

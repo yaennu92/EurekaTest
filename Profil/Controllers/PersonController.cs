@@ -2,22 +2,29 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Profil.DBContext;
 using Profil.Repository;
+using Steeltoe.Common.Discovery;
+using Steeltoe.Discovery;
 
 namespace Profil.Controllers;
-
 
 [ApiController]
 [Route("[controller]")]
 public class PersonController : ControllerBase
 {
-    
     private readonly ILogger<PersonController> _logger;
     private readonly PersonRepository _personRepository;
+    private readonly PersonContext _context;
+    private readonly HttpClient _httpClient;
+    private readonly DiscoveryHttpClientHandler _handler;
 
-    public PersonController(ILogger<PersonController> logger, PersonContext context)
+    public PersonController(ILogger<PersonController> logger, PersonContext context, IDiscoveryClient client)
     {
         _logger = logger;
         _personRepository = new PersonRepository(context);
+        _context = context;
+        _handler = new DiscoveryHttpClientHandler(client);
+
+        _httpClient = new HttpClient(_handler, false);
     }
 
     [HttpPost(Name = "AddPerson")]
@@ -27,10 +34,23 @@ public class PersonController : ControllerBase
         {
             if (person == null)
                 return BadRequest();
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                var createdPerson = _personRepository.AddPerson(person);
+                var  result =await _httpClient.PostAsJsonAsync("http://AddressExample/WeatherForecast/AddAddress", new
+                {
+                    id = createdPerson.Id,
+                    street = "string",
+                    zip = "string",
+                    city = "string"
+                });
+                if (result.StatusCode != HttpStatusCode.OK)
+                    throw new Exception("blubb");
+                
+                dbContextTransaction.Commit();
+            }
 
-            var createdPerson = await _personRepository.AddPerson(person);
             return Ok();
-
         }
         catch (Exception)
         {
@@ -38,6 +58,4 @@ public class PersonController : ControllerBase
                 "Error creating new employee record");
         }
     }
-    
-    
 }
